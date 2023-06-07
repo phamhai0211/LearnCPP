@@ -5,6 +5,7 @@
 #include<cstdio>
 #include<vector>
 #include<stdio.h>
+#include<stdlib.h>
 //using namespace std;
 //bubble sort arr
 //void Sort(int arr[],int n) {
@@ -23,38 +24,41 @@
 //            break;
 //    }
 //}
-void swap(int *a, int *b) {
-    int t = *a;
-    *a = *b;
-    *b = t;
-}
-
-//using last element as the pivot
-int partition(int arr[], int low, int high) {
-
-    // choosing pivot
-    int pivot = arr[high];
-
-    int i = (low - 1);
-    for (int j = low; j <= high - 1; j++) {
-
-        if (arr[j] < pivot) {
-            i++;
-            swap(&arr[i], &arr[j]);
-        }
-    }
-    swap(&arr[i + 1], &arr[high]);
-    return (i + 1);
-}
-// quick sort
-void quickSort(int arr[], int low, int high){
-
-    if (low < high) {
-        int index = partition(arr, low, high);
-
-        quickSort(arr, low, index - 1);
-        quickSort(arr, index + 1, high);
-    }
+//void swap(int *a, int *b) {
+//    int t = *a;
+//    *a = *b;
+//    *b = t;
+//}
+//
+////using last element as the pivot
+//int partition(int arr[], int low, int high) {
+//
+//    // choosing pivot
+//    int pivot = arr[high];
+//
+//    int i = (low - 1);
+//    for (int j = low; j <= high - 1; j++) {
+//
+//        if (arr[j] < pivot) {
+//            i++;
+//            swap(&arr[i], &arr[j]);
+//        }
+//    }
+//    swap(&arr[i + 1], &arr[high]);
+//    return (i + 1);
+//}
+//// quick sort
+//void quickSort(int arr[], int low, int high){
+//
+//    if (low < high) {
+//        int index = partition(arr, low, high);
+//
+//        quickSort(arr, low, index - 1);
+//        quickSort(arr, index + 1, high);
+//    }
+//}
+int cmpfnc(const void *a, const void *b) {
+    return(*(int*)a - *(int*)b);
 }
 // enter value of array
 void inputArray(int *arr,int n) {
@@ -118,7 +122,7 @@ void shuffle(int* arr, size_t n) {
     if (n > 1)
     {
         size_t i;
-        for (i = 0; i < n - 1; i++)
+        for (i = n-1; i > 0; i--)
         {
             size_t j = i + rand() / (RAND_MAX / (n - i) + 1);
             int t = arr[j];
@@ -136,9 +140,10 @@ int main()
     int* arr = new int[value];
     printf("Value : %d", value);
     inputArray(arr, value);
-    quickSort(arr,0,value-1);
+    /*quickSort(arr,0,value-1);*/
     printf("array sorted : ");
-    printArray(arr, value);
+    qsort(arr,value,sizeof(int),cmpfnc);
+   // printArray(arr, value);
     printf("\n");
    /* std::cout << "\n";
     std::cout << "array deleted\n";
