@@ -1,3 +1,2 @@
 ﻿  pratice1.cpp
-D:\ThucTap\CODEBT\pratice1\pratice1\pratice1.cpp(67,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   pratice1.vcxproj -> D:\ThucTap\CODEBT\pratice1\Debug\pratice1.exe

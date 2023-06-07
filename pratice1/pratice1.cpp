@@ -4,41 +4,70 @@
 #include <iostream>
 #include<cstdio>
 #include<vector>
+#include<stdio.h>
 //using namespace std;
 //bubble sort arr
-void Sort(int arr[],int n) {
-    int i, j;
-    bool swapped;
-    for (i = 0; i < n - 1; i++) {
-        swapped = false;
-        for (j = 0; j < n - i - 1; j++) {
-            if (arr[j] > arr[j + 1]) {
-                std::swap(arr[j], arr[j + 1]);
-                swapped = true;
-            }
-        }
-
-        if (swapped == false)
-            break;
-    }
+//void Sort(int arr[],int n) {
+//    int i, j;
+//    bool swapped;
+//    for (i = 0; i < n - 1; i++) {
+//        swapped = false;
+//        for (j = 0; j < n - i - 1; j++) {
+//            if (arr[j] > arr[j + 1]) {
+//                std::swap(arr[j], arr[j + 1]);
+//                swapped = true;
+//            }
+//        }
+//
+//        if (swapped == false)
+//            break;
+//    }
+//}
+void swap(int *a, int *b) {
+    int t = *a;
+    *a = *b;
+    *b = t;
 }
 
-// quick sort
-void Quick_Sort(){
+//using last element as the pivot
+int partition(int arr[], int low, int high) {
 
+    // choosing pivot
+    int pivot = arr[high];
+
+    int i = (low - 1);
+    for (int j = low; j <= high - 1; j++) {
+
+        if (arr[j] < pivot) {
+            i++;
+            swap(&arr[i], &arr[j]);
+        }
+    }
+    swap(&arr[i + 1], &arr[high]);
+    return (i + 1);
+}
+// quick sort
+void quickSort(int arr[], int low, int high){
+
+    if (low < high) {
+        int index = partition(arr, low, high);
+
+        quickSort(arr, low, index - 1);
+        quickSort(arr, index + 1, high);
+    }
 }
 // enter value of array
 void inputArray(int *arr,int n) {
-    for (int i = 0; i <= n - 1; i++) {
-        std::cout << "nhap gia tri thu " << i << "\n";
-        std::cin >> *(arr+i);
+    for (int i = 0; i < n; i++) {
+        printf("Nhap phan tu thu %d\n",i);
+        scanf_s("%d",(arr+i));
     }
 }
 // print array to screen
 void printArray(int arr[],int n) {
-    for (int i = 0; i < n; i++) {
-        std::cout << " " << arr[i];
-    }
+    for (int i = 0; i < n; i++) 
+        printf("%d",arr[i]);    
+   
 }
 
 //Delete value any location
@@ -60,49 +89,70 @@ void deleteRepeat(int a[], int& n) {
     }
 }
 
-void Swap(int* number_1, int* number_2)
-{
-    int temp = *number_1;
-    *number_1 = *number_2;
-    *number_2 = temp;
-}
-
-void ShuffleArray(int* arr, int n)
-{
-    srand(time(NULL));
-
-    int minPosition;
-    int maxPosition = n - 1;
-    int swapPosition;
-
-    int i = 0;
-    while (i < n - 1)
+//void Swap(int* number_1, int* number_2)
+//{
+//    int temp = *number_1;
+//    *number_1 = *number_2;
+//    *number_2 = temp;
+//}
+//
+//void ShuffleArray(int* arr, int n)
+//{
+//    srand(time(NULL));
+//
+//    int minPosition;
+//    int maxPosition = n - 1;
+//    int swapPosition;
+//
+//    int i = 0;
+//    while (i < n - 1)
+//    {
+//        minPosition = i + 1;
+//        swapPosition = rand() % (maxPosition - minPosition + 1) + minPosition;
+//
+//        Swap(&arr[i], &arr[swapPosition]);
+//        i++;
+//    }
+//}
+void shuffle(int* arr, size_t n) {
+    if (n > 1)
     {
-        minPosition = i + 1;
-        swapPosition = rand() % (maxPosition - minPosition + 1) + minPosition;
-
-        Swap(&arr[i], &arr[swapPosition]);
-        i++;
+        size_t i;
+        for (i = 0; i < n - 1; i++)
+        {
+            size_t j = i + rand() / (RAND_MAX / (n - i) + 1);
+            int t = arr[j];
+            arr[j] = arr[i];
+            arr[i] = t;
+        }
     }
 }
+
 int main()
 {
     int value;
-    std::cout << "nhap so luong phan tu cua mang\n";
-    std::cin >> value;
+    printf( "nhap so luong phan tu cua mang :");
+    scanf_s("%d", &value);
     int* arr = new int[value];
-    
+    printf("Value : %d", value);
     inputArray(arr, value);
-    Sort(arr, value);
-    std::cout << "array sorted\n";
+    quickSort(arr,0,value-1);
+    printf("array sorted : ");
     printArray(arr, value);
-    std::cout << "\n";
+    printf("\n");
+   /* std::cout << "\n";
     std::cout << "array deleted\n";
     deleteRepeat(arr, value);
     printArray(arr, value);
-    std::cout << "\n";
-    ShuffleArray(arr, value);
-    std::cout << "shuffle array\n";
+    std::cout << "\n";*/
+   /* ShuffleArray(arr, value);*/
+  /*  std::cout << "shuffle array\n";
+    printArray(arr, value);*/
+    deleteRepeat(arr, value);
+    printArray(arr, value);
+    printf("\n");
+    shuffle(arr,value);
+    printf("shuffle array: ");
     printArray(arr, value);
     delete[] arr;
     return 0;
