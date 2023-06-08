@@ -58,7 +58,19 @@
 //    }
 //}
 int cmpfnc(const void *a, const void *b) {
-    return(*(int*)a - *(int*)b);
+    //return(*(int*)a - *(int*)b);
+    int
+        n1 = *(int*)a,
+        n2 = *(int*)b;
+
+
+    return
+        n1 > n2             // if
+        ? 1                 // then
+        : n1 == n2          // else if
+        ? 0                 // then
+        : -1                // else
+        ;
 }
 // enter value of array
 void inputArray(int *arr,int n) {
@@ -70,7 +82,7 @@ void inputArray(int *arr,int n) {
 // print array to screen
 void printArray(int arr[],int n) {
     for (int i = 0; i < n; i++) 
-        printf("%d",arr[i]);    
+        printf("%d ",arr[i]);    
    
 }
 
@@ -118,19 +130,18 @@ void deleteRepeat(int a[], int& n) {
 //        i++;
 //    }
 //}
-void shuffle(int* arr, size_t n) {
-    if (n > 1)
-    {
+void shuffle(int* arr, size_t n) { 
+        srand(time(NULL));
         size_t i;
         for (i = n-1; i > 0; i--)
         {
-            size_t j = i + rand() / (RAND_MAX / (n - i) + 1);
-            int t = arr[j];
-            arr[j] = arr[i];
-            arr[i] = t;
-        }
-    }
+            int swap_index = rand() % n;
+            int t = arr[i];
+            arr[i] = arr[swap_index];
+            arr[swap_index] = t;
+        }   
 }
+
 
 int main()
 {
@@ -143,7 +154,7 @@ int main()
     /*quickSort(arr,0,value-1);*/
     printf("array sorted : ");
     qsort(arr,value,sizeof(int),cmpfnc);
-   // printArray(arr, value);
+    printArray(arr, value);
     printf("\n");
    /* std::cout << "\n";
     std::cout << "array deleted\n";
@@ -153,8 +164,8 @@ int main()
    /* ShuffleArray(arr, value);*/
   /*  std::cout << "shuffle array\n";
     printArray(arr, value);*/
-    deleteRepeat(arr, value);
-    printArray(arr, value);
+    /*deleteRepeat(arr, value);
+    printArray(arr, value);*/
     printf("\n");
     shuffle(arr,value);
     printf("shuffle array: ");
